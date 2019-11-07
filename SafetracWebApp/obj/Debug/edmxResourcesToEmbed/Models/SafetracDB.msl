@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SafetracModelStoreContainer" CdmEntityContainer="SafetracEntities">
+    <EntitySetMapping Name="Areas">
+      <EntityTypeMapping TypeName="SafetracModel.Area">
+        <MappingFragment StoreEntitySet="Areas">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="area_name" ColumnName="area_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserAreas">
+      <EntityTypeMapping TypeName="SafetracModel.UserArea">
+        <MappingFragment StoreEntitySet="UserAreas">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="areas_id" ColumnName="areas_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="SafetracModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="user_password" ColumnName="user_password" />
+          <ScalarProperty Name="email_address" ColumnName="email_address" />
+          <ScalarProperty Name="date_created" ColumnName="date_created" />
+          <ScalarProperty Name="date_modified" ColumnName="date_modified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetAllUsers" FunctionName="SafetracModel.Store.GetAllUsers">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SafetracModel.GetAllUsers_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="email_address" ColumnName="email_address" />
+          <ScalarProperty Name="date_created" ColumnName="date_created" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ListUsers" FunctionName="SafetracModel.Store.ListUsers">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SafetracModel.ListUsers_Result">
+          <ScalarProperty Name="MaxRows" ColumnName="MaxRows" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="email_address" ColumnName="email_address" />
+          <ScalarProperty Name="date_created" ColumnName="date_created" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,73 @@
+﻿@model SafetracWebApp.Models.User
+<div>
+
+    <form id="myForm">
+        @Html.HiddenFor(m => m.id)
+        <div class="form-group">
+            <label class="control-label">First Name</label>
+            <div>
+                @Html.TextBoxFor(model => model.first_name, new { @class = "form-control", @placeholder = "First Name" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Last Name</label>
+            <div>
+                @Html.TextBoxFor(model => model.last_name, new { @class = "form-control", @placeholder = "Last Name" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Password</label>
+            <div>
+                @Html.PasswordFor(model => model.user_password, new { @class = "form-control", @placeholder = "User Password" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Email</label>
+            <div>
+                @Html.TextBoxFor(model => model.email_address, new { @class = "form-control",@Type="email", @placeholder = "Email" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                <a href="#" id="btnSubmit" class="btn btn-success btn-block">
+                    Save
+                </a>
+
+            </div>
+        </div>
+
+    </form>
+
+    <div style="text-align:center;display:none" id="loaderDiv">
+        <img src="~/Content/InternetSlowdown_Day.gif" width="150" />
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function () {
+
+            $("#loaderDiv").show();
+
+            var myformdata = $("#myForm").serialize();
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Users/AddUsers",
+                data: myformdata,
+                success: function () {
+                    $("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+                    window.location.href = "/Users/Index";
+
+                }
+
+            })
+        })
+
+    })
+</script>

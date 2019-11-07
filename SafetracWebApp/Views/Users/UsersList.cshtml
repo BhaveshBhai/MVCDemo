@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "UsersList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Scripts/js/jquery.dataTables.min.css" rel="stylesheet" />
+<table id="UserTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Created date</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Created date</th>
+        </tr>
+    </tfoot>
+</table>
+
+@section scripts{
+    <script src="~/Scripts/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#UserTable').DataTable({
+
+                "serverSide": true,
+                "order": [0, "asc"],
+                "Processing": true,
+                "ajax": {
+                    "url": "/Users/LoadAllUsersData",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { 'data': 'first_name', "name": "first_name", "autoWidth": true },
+                    { 'data': 'last_name', "name": "last_name", "autoWidth": true },
+                    { 'data': 'email_address', "name": "email_address", "autoWidth": true },
+                    { 'data': 'date_created', "name": "date_created", "autoWidth": true }
+                ],
+
+            });
+          
+        });
+    </script>
+}
+

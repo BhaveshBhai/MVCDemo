@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SafetracModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Areas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="area_name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="UserAreas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="areas_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="user_password" Type="nvarchar" MaxLength="255" />
+          <Property Name="email_address" Type="nvarchar" MaxLength="255" />
+          <Property Name="date_created" Type="datetime" />
+          <Property Name="date_modified" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_UserAreas_Areas">
+          <End Role="Areas" Type="Self.Areas" Multiplicity="0..1" />
+          <End Role="UserAreas" Type="Self.UserAreas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Areas">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserAreas">
+              <PropertyRef Name="areas_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAreas_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="UserAreas" Type="Self.UserAreas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserAreas">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetAllUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ListUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SearchValue" Type="nvarchar" Mode="In" />
+          <Parameter Name="PageNo" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="SortColumn" Type="nvarchar" Mode="In" />
+          <Parameter Name="SortOrder" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="SafetracModelStoreContainer">
+          <EntitySet Name="Areas" EntityType="Self.Areas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAreas" EntityType="Self.UserAreas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_UserAreas_Areas" Association="Self.FK_UserAreas_Areas">
+            <End Role="Areas" EntitySet="Areas" />
+            <End Role="UserAreas" EntitySet="UserAreas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAreas_Users" Association="Self.FK_UserAreas_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserAreas" EntitySet="UserAreas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SafetracModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="area_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserAreas" Relationship="Self.FK_UserAreas_Areas" FromRole="Areas" ToRole="UserAreas" />
+        </EntityType>
+        <EntityType Name="UserArea">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="areas_id" Type="Int32" />
+          <NavigationProperty Name="Area" Relationship="Self.FK_UserAreas_Areas" FromRole="UserAreas" ToRole="Areas" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserAreas_Users" FromRole="UserAreas" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="user_password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="email_address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="date_created" Type="DateTime" Precision="3" />
+          <Property Name="date_modified" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UserAreas" Relationship="Self.FK_UserAreas_Users" FromRole="Users" ToRole="UserAreas" />
+        </EntityType>
+        <Association Name="FK_UserAreas_Areas">
+          <End Role="Areas" Type="Self.Area" Multiplicity="0..1" />
+          <End Role="UserAreas" Type="Self.UserArea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Areas">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserAreas">
+              <PropertyRef Name="areas_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAreas_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UserAreas" Type="Self.UserArea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserAreas">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SafetracEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Areas" EntityType="Self.Area" />
+          <EntitySet Name="UserAreas" EntityType="Self.UserArea" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_UserAreas_Areas" Association="Self.FK_UserAreas_Areas">
+            <End Role="Areas" EntitySet="Areas" />
+            <End Role="UserAreas" EntitySet="UserAreas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAreas_Users" Association="Self.FK_UserAreas_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserAreas" EntitySet="UserAreas" />
+          </AssociationSet>
+          <FunctionImport Name="GetAllUsers" ReturnType="Collection(SafetracModel.GetAllUsers_Result)" />
+          <FunctionImport Name="ListUsers" ReturnType="Collection(SafetracModel.ListUsers_Result)">
+            <Parameter Name="SearchValue" Mode="In" Type="String" />
+            <Parameter Name="PageNo" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="SortColumn" Mode="In" Type="String" />
+            <Parameter Name="SortOrder" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetAllUsers_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="first_name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="last_name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="email_address" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="date_created" Nullable="true" MaxLength="4000" />
+        </ComplexType>
+        <ComplexType Name="ListUsers_Result">
+          <Property Type="Int32" Name="MaxRows" Nullable="true" />
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="first_name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="last_name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="email_address" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="date_created" Nullable="true" MaxLength="4000" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SafetracModelStoreContainer" CdmEntityContainer="SafetracEntities">
+          <EntitySetMapping Name="Areas">
+            <EntityTypeMapping TypeName="SafetracModel.Area">
+              <MappingFragment StoreEntitySet="Areas">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="area_name" ColumnName="area_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAreas">
+            <EntityTypeMapping TypeName="SafetracModel.UserArea">
+              <MappingFragment StoreEntitySet="UserAreas">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="areas_id" ColumnName="areas_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SafetracModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="user_password" ColumnName="user_password" />
+                <ScalarProperty Name="email_address" ColumnName="email_address" />
+                <ScalarProperty Name="date_created" ColumnName="date_created" />
+                <ScalarProperty Name="date_modified" ColumnName="date_modified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetAllUsers" FunctionName="SafetracModel.Store.GetAllUsers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SafetracModel.GetAllUsers_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="email_address" ColumnName="email_address" />
+                <ScalarProperty Name="date_created" ColumnName="date_created" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ListUsers" FunctionName="SafetracModel.Store.ListUsers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SafetracModel.ListUsers_Result">
+                <ScalarProperty Name="MaxRows" ColumnName="MaxRows" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="email_address" ColumnName="email_address" />
+                <ScalarProperty Name="date_created" ColumnName="date_created" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
