@@ -75,6 +75,7 @@
       <Parameter Name="SortColumn" Mode="In" Type="String" />
       <Parameter Name="SortOrder" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="GetAllAreas" ReturnType="Collection(SafetracModel.GetAllAreas_Result)" />
   </EntityContainer>
   <ComplexType Name="GetAllUsers_Result">
     <Property Type="Int32" Name="id" Nullable="false" />
@@ -90,5 +91,9 @@
     <Property Type="String" Name="last_name" Nullable="true" MaxLength="255" />
     <Property Type="String" Name="email_address" Nullable="true" MaxLength="255" />
     <Property Type="String" Name="date_created" Nullable="true" MaxLength="4000" />
+  </ComplexType>
+  <ComplexType Name="GetAllAreas_Result">
+    <Property Type="Int32" Name="id" Nullable="false" />
+    <Property Type="String" Name="area_name" Nullable="true" MaxLength="255" />
   </ComplexType>
 </Schema>

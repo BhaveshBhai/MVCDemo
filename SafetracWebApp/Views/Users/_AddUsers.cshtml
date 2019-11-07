@@ -1,30 +1,37 @@
-﻿@model SafetracWebApp.Models.User
+﻿@model SafetracWebApp.Models.UserModelView
 <div>
 
     <form id="myForm">
-        @Html.HiddenFor(m => m.id)
+        @Html.HiddenFor(m => m.Id)
         <div class="form-group">
             <label class="control-label">First Name</label>
             <div>
-                @Html.TextBoxFor(model => model.first_name, new { @class = "form-control", @placeholder = "First Name" })
+                @Html.TextBoxFor(model => model.First_Name, new { @class = "form-control", @placeholder = "First Name" })
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Last Name</label>
             <div>
-                @Html.TextBoxFor(model => model.last_name, new { @class = "form-control", @placeholder = "Last Name" })
+                @Html.TextBoxFor(model => model.Last_Name, new { @class = "form-control", @placeholder = "Last Name" })
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Password</label>
             <div>
-                @Html.PasswordFor(model => model.user_password, new { @class = "form-control", @placeholder = "User Password" })
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "User Password" })
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Email</label>
             <div>
-                @Html.TextBoxFor(model => model.email_address, new { @class = "form-control",@Type="email", @placeholder = "Email" })
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control",@Type="email", @placeholder = "Email" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Email</label>
+            <div>
+                @Html.DropDownListFor(model => model.Areas_Id,
+        new SelectList(ViewBag.Areas, "Value", "Text"), new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">

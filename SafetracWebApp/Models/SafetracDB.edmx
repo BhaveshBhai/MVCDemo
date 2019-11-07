@@ -56,6 +56,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetAllAreas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ListUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SearchValue" Type="nvarchar" Mode="In" />
@@ -156,6 +157,7 @@
             <Parameter Name="SortColumn" Mode="In" Type="String" />
             <Parameter Name="SortOrder" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetAllAreas" ReturnType="Collection(SafetracModel.GetAllAreas_Result)" />
         </EntityContainer>
         <ComplexType Name="GetAllUsers_Result">
           <Property Type="Int32" Name="id" Nullable="false" />
@@ -171,6 +173,10 @@
           <Property Type="String" Name="last_name" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="email_address" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="date_created" Nullable="true" MaxLength="4000" />
+        </ComplexType>
+        <ComplexType Name="GetAllAreas_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="area_name" Nullable="true" MaxLength="255" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -228,6 +234,14 @@
                 <ScalarProperty Name="last_name" ColumnName="last_name" />
                 <ScalarProperty Name="email_address" ColumnName="email_address" />
                 <ScalarProperty Name="date_created" ColumnName="date_created" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllAreas" FunctionName="SafetracModel.Store.GetAllAreas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SafetracModel.GetAllAreas_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="area_name" ColumnName="area_name" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

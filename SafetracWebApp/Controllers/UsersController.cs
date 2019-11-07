@@ -10,6 +10,7 @@ namespace SafetracWebApp.Controllers
     public class UsersController : Controller
     {
         UserModelView userModel = new UserModelView();
+        AreaModel areaModel = new AreaModel();
         // GET: Users
         public ActionResult Index()
         {
@@ -45,12 +46,13 @@ namespace SafetracWebApp.Controllers
         }
         public ActionResult Add()
         {
+            ViewBag.Areas = new SelectList(areaModel.LoadAreas().ToList(), "id", "area_name");
             return PartialView("_AddUsers");
         }
         [HttpPost]
-        public ActionResult AddUsers(User users)
+        public ActionResult AddUsers(UserModelView users)
         {
-            var result = userModel.AddUser(users);
+            var result = userModel.AddUserWithPermission(users);
             return RedirectToAction("Index");
         }
     }

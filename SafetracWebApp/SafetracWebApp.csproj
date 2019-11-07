@@ -145,6 +145,10 @@
     <Compile Include="Models\Area.cs">
       <DependentUpon>SafetracDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AreaModel.cs" />
+    <Compile Include="Models\GetAllAreas_Result.cs">
+      <DependentUpon>SafetracDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GetAllUsers_Result.cs">
       <DependentUpon>SafetracDB.tt</DependentUpon>
     </Compile>

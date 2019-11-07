@@ -54,5 +54,13 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetAllAreas" FunctionName="SafetracModel.Store.GetAllAreas">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SafetracModel.GetAllAreas_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="area_name" ColumnName="area_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>
